@@ -1,4 +1,5 @@
 import re
+
 from nltk.tokenize import WordPunctTokenizer
 from bs4 import BeautifulSoup
 
@@ -22,14 +23,11 @@ def tweet_cleaner(text):
     words = tok.tokenize(lower_case)
     return (" ".join(words)).strip()
 
-class RawTwitterCleaner(TransformerMixin, BaseEstimator):
-
-    def transform(self, text):
+def apply_tweet_cleaner(text):
+    if text and isinstance(text, str):
         return tweet_cleaner(text)
 
-    def fit(self, *_):
-        return self
-
-def get_raw_twitter_pipeline():
-      return make_pipeline(RawTwitterCleaner())
+def add_clean_tweets_column(df, rawTweetsCol):
+    df["clean_tweets"] = df[rawTweetsCol].apply(apply_tweet_cleaner)
+    return df
 
