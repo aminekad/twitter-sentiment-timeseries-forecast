@@ -16,3 +16,15 @@ To extarct price and tweet data for a particular stock, use the following script
 
 This will create a new directory `apple-stock` with two files `AAPL.csv` and `AAPL.json`. The former is Apple stock prices data and the latter is a all the relevant tweets
 
+# preprocess raw twitter data
+
+To clean up raw tweets, import twitter data as a Pandas dataframe and apply the `add_clean_tweets_column` function in `twitter_processing_utils`
+
+```
+import pandas as pd
+
+from twitter_processing_utils import add_clean_tweets_column
+
+df = pd.read_json("APPL_DATA/AAPL.json")
+transformed = add_clean_tweets_column(df, "text")
+```
